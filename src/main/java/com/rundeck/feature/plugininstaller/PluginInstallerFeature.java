@@ -4,6 +4,7 @@ package com.rundeck.feature.plugininstaller;
 import com.rundeck.feature.api.Feature;
 import com.rundeck.feature.api.action.FeatureAction;
 import com.rundeck.feature.plugininstaller.actions.InstallPluginFeatureAction;
+import com.rundeck.feature.plugininstaller.actions.ListInstallablePluginsFeatureAction;
 import com.rundeck.feature.plugininstaller.actions.UninstallPluginFeatureAction;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Component
 public class PluginInstallerFeature implements Feature<PluginInstallerFeatureConfig> {
 
-    boolean enable;
+    boolean enable = true;
 
-    Map<String,FeatureAction<?>> actions = Map.of(InstallPluginFeatureAction.NAME, new InstallPluginFeatureAction(), UninstallPluginFeatureAction.NAME, new UninstallPluginFeatureAction());
+    Map<String,FeatureAction<?>> actions = Map.of(ListInstallablePluginsFeatureAction.NAME, new ListInstallablePluginsFeatureAction(),
+            InstallPluginFeatureAction.NAME, new InstallPluginFeatureAction(),
+            UninstallPluginFeatureAction.NAME, new UninstallPluginFeatureAction());
 
     PluginInstallerFeatureConfig config = new PluginInstallerFeatureConfig();
 

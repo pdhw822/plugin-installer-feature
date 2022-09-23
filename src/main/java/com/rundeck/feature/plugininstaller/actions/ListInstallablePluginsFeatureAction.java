@@ -12,9 +12,10 @@ import com.rundeck.feature.plugininstaller.util.PluginUtils;
 import java.util.stream.Collectors;
 
 public class ListInstallablePluginsFeatureAction implements FeatureAction<Void> {
+    public static final String NAME = "list-installable-plugins";
     @Override
     public String getName() {
-        return "list-installable-plugins";
+        return NAME;
     }
 
     @Override

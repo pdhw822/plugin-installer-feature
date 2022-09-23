@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.rundeck.feature</groupId>
     <artifactId>plugin-installer-feature</artifactId>
-    <version>v0.1.0</version>
+    <version>v0.2.0</version>
     <name>plugin-installer-feature</name>
     <description>plugin-installer-feature</description>
     <properties>

@@ -33,7 +33,7 @@ public class InstallPluginFeatureAction implements FeatureAction<InstallPluginFe
             PluginInstallerFeatureConfig config = featureActionContext.get(FeatureActionContext.KEY_FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
             PluginList pluginList = PluginUtils.downloadPluginList(config);
             //TODO: plugin validation
-            PluginUtils.downloadPluginTo(config, data.plugin, data.version, String.format("%s/libext", System.getProperty("rdeck.base")));
+            PluginUtils.downloadPluginTo(config, data.plugin, data.version, String.format("%s/libext/%s-%s.jar", System.getProperty("rdeck.base"), data.plugin, data.version));
             evtPublisher.publishOutput(new LogOutputActionEvent(aid, String.format("Installed plugin: %s:%s", data.plugin, data.version), OutputLevel.ERROR));
             return CompletionStatus.SUCCESS;
         } catch(Exception ex) {

@@ -30,7 +30,13 @@ public class ListInstallablePluginsFeatureAction implements FeatureAction<Void> 
             ActionEventPublisher evtPublisher = featureActionContext.getEventPublisher();
             PluginInstallerFeatureConfig config = featureActionContext.get(FeatureActionContext.KEY_FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
             PluginList pluginList = PluginUtils.downloadPluginList(config);
-            evtPublisher.publishOutput(new LogOutputActionEvent(aid, pluginList.plugins.stream().map(p -> p.name).collect(Collectors.joining("\n"))));
+            StringBuilder b = new StringBuilder();
+            pluginList.plugins.forEach(p -> {
+                b.append(p.name);
+                b.append('\n');
+                p.versions.forEach(v -> b.append(String.format("\t%s\n",v)));
+            });
+            evtPublisher.publishOutput(new LogOutputActionEvent(aid, b.toString()));
             return CompletionStatus.SUCCESS;
         } catch(Exception ex) {
             ex.printStackTrace();

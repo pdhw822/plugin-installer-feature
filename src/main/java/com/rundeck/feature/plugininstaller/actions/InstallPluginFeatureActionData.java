@@ -11,4 +11,20 @@ public class InstallPluginFeatureActionData {
         this.plugin = plugin;
         this.version = version;
     }
+
+    public String getPlugin() {
+        return plugin;
+    }
+
+    public void setPlugin(String plugin) {
+        this.plugin = plugin;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 }

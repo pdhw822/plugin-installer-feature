@@ -1,7 +1,7 @@
 package com.rundeck.feature.plugininstaller.actions;
 
 import com.rundeck.feature.api.action.FeatureAction;
-import com.rundeck.feature.api.context.ContextKey;
+import com.rundeck.feature.api.context.ContextKeys;
 import com.rundeck.feature.api.context.FeatureActionContext;
 import com.rundeck.feature.api.event.ActionEventPublisher;
 import com.rundeck.feature.api.model.CompletionStatus;
@@ -27,7 +27,7 @@ public class ListInstallablePluginsFeatureAction implements FeatureAction<Void> 
         try {
             String aid = featureActionContext.getActionId();
             ActionEventPublisher evtPublisher = featureActionContext.getEventPublisher();
-            PluginInstallerFeatureConfig config = featureActionContext.get(ContextKey.FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
+            PluginInstallerFeatureConfig config = featureActionContext.get(ContextKeys.FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
             PluginList pluginList = PluginUtils.downloadPluginList(config);
             StringBuilder b = new StringBuilder();
             pluginList.plugins.forEach(p -> {

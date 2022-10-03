@@ -1,7 +1,7 @@
 package com.rundeck.feature.plugininstaller.actions;
 
 import com.rundeck.feature.api.action.FeatureAction;
-import com.rundeck.feature.api.context.ContextKey;
+import com.rundeck.feature.api.context.ContextKeys;
 import com.rundeck.feature.api.context.FeatureActionContext;
 import com.rundeck.feature.api.event.ActionEventPublisher;
 import com.rundeck.feature.api.model.CompletionStatus;
@@ -28,7 +28,7 @@ public class UninstallPluginFeatureAction implements FeatureAction<UninstallPlug
         String aid = featureActionContext.getActionId();
         String user = featureActionContext.getUser();
         ActionEventPublisher evtPublisher = featureActionContext.getEventPublisher();
-        UninstallPluginFeatureActionData data = featureActionContext.get(ContextKey.ACTION_DATA, UninstallPluginFeatureActionData.class);
+        UninstallPluginFeatureActionData data = featureActionContext.get(ContextKeys.ACTION_DATA, UninstallPluginFeatureActionData.class);
         try {
             String file = String.format("%s/libext/%s-%s.jar", System.getProperty("rdeck.base"), data.plugin, data.version);
             Files.delete(Path.of(file));

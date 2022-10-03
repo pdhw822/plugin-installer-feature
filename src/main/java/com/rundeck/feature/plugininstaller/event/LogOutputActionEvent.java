@@ -2,67 +2,32 @@ package com.rundeck.feature.plugininstaller.event;
 
 import com.rundeck.feature.api.output.ActionOutputEvent;
 import com.rundeck.feature.api.output.OutputLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LogOutputActionEvent implements ActionOutputEvent {
     String actionId;
     String message;
     OutputLevel level = OutputLevel.NORMAL;
     Long timestamp = System.nanoTime();
+    String user;
 
-    public LogOutputActionEvent() {
-    }
 
-    public LogOutputActionEvent(String actionId, String message) {
+    public LogOutputActionEvent(String actionId, String user, String message) {
         this.actionId = actionId;
         this.message = message;
+        this.user = user;
     }
 
-    public LogOutputActionEvent(String actionId, String message, OutputLevel level) {
+    public LogOutputActionEvent(String actionId, String user, String message, OutputLevel level) {
         this.actionId = actionId;
         this.message = message;
+        this.user = user;
         this.level = level;
     }
 
-    public LogOutputActionEvent(String actionId, String message, OutputLevel level, Long timestamp) {
-        this.actionId = actionId;
-        this.message = message;
-        this.level = level;
-        this.timestamp = timestamp;
-    }
-
-    @Override
-    public String getActionId() {
-        return actionId;
-    }
-
-    public void setActionId(String actionId) {
-        this.actionId = actionId;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    @Override
-    public OutputLevel getLevel() {
-        return level;
-    }
-
-    public void setLevel(OutputLevel level) {
-        this.level = level;
-    }
-
-    @Override
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
 }

@@ -1,6 +1,7 @@
 package com.rundeck.feature.plugininstaller.actions;
 
 import com.rundeck.feature.api.action.FeatureAction;
+import com.rundeck.feature.api.context.ContextKey;
 import com.rundeck.feature.api.context.FeatureActionContext;
 import com.rundeck.feature.api.event.ActionEventPublisher;
 import com.rundeck.feature.api.model.CompletionStatus;
@@ -27,18 +28,19 @@ public class InstallPluginFeatureAction implements FeatureAction<InstallPluginFe
     @Override
     public CompletionStatus execute(FeatureActionContext featureActionContext) {
         String aid = featureActionContext.getActionId();
+        String user = featureActionContext.getUser();
         ActionEventPublisher evtPublisher = featureActionContext.getEventPublisher();
         try {
-            InstallPluginFeatureActionData data = featureActionContext.get(FeatureActionContext.KEY_ACTION_DATA, InstallPluginFeatureActionData.class);
-            PluginInstallerFeatureConfig config = featureActionContext.get(FeatureActionContext.KEY_FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
+            InstallPluginFeatureActionData data = featureActionContext.get(ContextKey.ACTION_DATA, InstallPluginFeatureActionData.class);
+            PluginInstallerFeatureConfig config = featureActionContext.get(ContextKey.FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
             PluginList pluginList = PluginUtils.downloadPluginList(config);
             //TODO: plugin validation
             PluginUtils.downloadPluginTo(config, data.plugin, data.version, String.format("%s/libext/%s-%s.jar", System.getProperty("rdeck.base"), data.plugin, data.version));
-            evtPublisher.publishOutput(new LogOutputActionEvent(aid, String.format("Installed plugin: %s:%s", data.plugin, data.version), OutputLevel.ERROR));
+            evtPublisher.publishOutput(new LogOutputActionEvent(aid, user, String.format("Installed plugin: %s:%s", data.plugin, data.version), OutputLevel.ERROR));
             return CompletionStatus.SUCCESS;
         } catch(Exception ex) {
             ex.printStackTrace();
-            evtPublisher.publishOutput(new LogOutputActionEvent(aid, String.format("Failed to install plugin: %s",ex.getMessage()), OutputLevel.ERROR));
+            evtPublisher.publishOutput(new LogOutputActionEvent(aid, user, String.format("Failed to install plugin: %s",ex.getMessage()), OutputLevel.ERROR));
         }
         return CompletionStatus.ERROR;
     }

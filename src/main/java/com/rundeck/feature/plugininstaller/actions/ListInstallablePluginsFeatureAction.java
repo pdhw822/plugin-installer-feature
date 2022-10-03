@@ -1,6 +1,7 @@
 package com.rundeck.feature.plugininstaller.actions;
 
 import com.rundeck.feature.api.action.FeatureAction;
+import com.rundeck.feature.api.context.ContextKey;
 import com.rundeck.feature.api.context.FeatureActionContext;
 import com.rundeck.feature.api.event.ActionEventPublisher;
 import com.rundeck.feature.api.model.CompletionStatus;
@@ -8,8 +9,6 @@ import com.rundeck.feature.plugininstaller.PluginInstallerFeatureConfig;
 import com.rundeck.feature.plugininstaller.event.LogOutputActionEvent;
 import com.rundeck.feature.plugininstaller.models.PluginList;
 import com.rundeck.feature.plugininstaller.util.PluginUtils;
-
-import java.util.stream.Collectors;
 
 public class ListInstallablePluginsFeatureAction implements FeatureAction<Void> {
     public static final String NAME = "list-installable-plugins";
@@ -28,7 +27,7 @@ public class ListInstallablePluginsFeatureAction implements FeatureAction<Void> 
         try {
             String aid = featureActionContext.getActionId();
             ActionEventPublisher evtPublisher = featureActionContext.getEventPublisher();
-            PluginInstallerFeatureConfig config = featureActionContext.get(FeatureActionContext.KEY_FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
+            PluginInstallerFeatureConfig config = featureActionContext.get(ContextKey.FEATURE_CONFIG, PluginInstallerFeatureConfig.class);
             PluginList pluginList = PluginUtils.downloadPluginList(config);
             StringBuilder b = new StringBuilder();
             pluginList.plugins.forEach(p -> {
@@ -36,7 +35,7 @@ public class ListInstallablePluginsFeatureAction implements FeatureAction<Void> 
                 b.append('\n');
                 p.versions.forEach(v -> b.append(String.format("\t%s\n",v)));
             });
-            evtPublisher.publishOutput(new LogOutputActionEvent(aid, b.toString()));
+            evtPublisher.publishOutput(new LogOutputActionEvent(aid, featureActionContext.getUser(), b.toString()));
             return CompletionStatus.SUCCESS;
         } catch(Exception ex) {
             ex.printStackTrace();

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.rundeck.feature</groupId>
     <artifactId>plugin-installer-feature</artifactId>
-    <version>v0.8.0</version>
+    <version>v0.9.0</version>
     <name>plugin-installer-feature</name>
     <description>plugin-installer-feature</description>
     <properties>
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>com.github.pdhw822</groupId>
             <artifactId>rundeck-feature-api-lib</artifactId>
-            <version>v0.12.0</version>
+            <version>v0.13.0</version>
         </dependency>
 
         <dependency>
